@@ -1,5 +1,8 @@
-from all_downloader.main import downloadAllComposersVersions
+from downloader.main import initComposerDownload
 
-print("hello world, please dont run this yet, it will download every composer versions")
 if __name__ == "__main__":
-    downloadAllComposersVersions()
+    __input = input('Enter composer version to download: ').replace(" ", "")
+    if (__input == "all"):
+        initComposerDownload('')
+    else:
+        initComposerDownload(__input)

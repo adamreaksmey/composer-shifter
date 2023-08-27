@@ -5,15 +5,7 @@ from urllib.parse import urljoin
 from concurrent.futures import ThreadPoolExecutor
 
 
-def download_file(url, path):
-    response = requests.get(url, stream=True)
-    response.raise_for_status()
-    with open(path, 'wb') as fd:
-        for chunk in response.iter_content(chunk_size=65536):
-            fd.write(chunk)
-
-
-def downloadAllComposersVersions():
+def initComposerDownload(_version):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     folder_path = os.path.join(parent_dir, 'composers')
@@ -23,8 +15,14 @@ def downloadAllComposersVersions():
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     links = soup.find_all('a')
-    composer_links = [urljoin(url, link['href']) for link in links if 'composer.phar' in link.get(
-        'href') and link.get('href').endswith('composer.phar') and 'latest' not in link.get('href')]
+
+    composer_links = [
+        urljoin(url, link['href'])
+        for link in links
+        if 'composer.phar' in link.get('href') and
+        link.get('href').endswith('composer.phar') and
+        ('latest' not in link.get('href') and (not _version or _version in link.get('href')))
+    ]
 
     # Download and save the composer versions
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -37,3 +35,11 @@ def downloadAllComposersVersions():
             file_path = os.path.join(composer_folder, 'composer.phar')
             executor.submit(download_file, link, file_path)
             print(f"Downloaded: {file_path}")
+
+
+def download_file(url, path):
+    response = requests.get(url, stream=True)
+    response.raise_for_status()
+    with open(path, 'wb') as fd:
+        for chunk in response.iter_content(chunk_size=65536):
+            fd.write(chunk)
