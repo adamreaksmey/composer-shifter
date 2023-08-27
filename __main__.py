@@ -14,7 +14,7 @@ def download_all():
     initComposerDownload('')
 
 def switch_version():
-    checkInstalledVersion('1.5.5')
+    checkInstalledVersion('2.5.5')
     return;
 
 def invalid_option():
