@@ -1,6 +1,7 @@
 from downloader.__main__ import initComposerDownload
 from switcher.__main__ import checkInstalledVersion
 import os
+from components.terminal_init.__main__ import terminalInitial
 
 def download_single():
     see_all = input("Would you like to see all available composer versions? (Y/N) ")
@@ -20,21 +21,11 @@ def switch_version():
 def invalid_option():
     print("Invalid option chosen. Please enter a valid number.")
 
-options = {
-    "1": download_single,
-    "2": download_all,
-    "3": switch_version
-}
+terminalInitial({
+    "download_single" : download_single,
+    "download_all" : download_all,
+    "switch_version" : switch_version,
+    "invalid_option": invalid_option,
+    "os" : os
+})
 
-if __name__ == "__main__":
-    os.system('cls' if os.name == 'nt' else 'clear')
-    question = """
-What would you like to do?:
-Please input a number:
-1. Download a single composer version
-2. Download all composer versions
-3. Switch composer version
-"""
-    print(question)
-    selection = input("Please choose a number: ")
-    options.get(selection, invalid_option)()

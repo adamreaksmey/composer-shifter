@@ -2,6 +2,7 @@ import os
 import requests
 from concurrent.futures import ThreadPoolExecutor
 from components.scraper.__main__ import versionScraper
+from components.connection.__main__ import connect
 
 def initComposerDownload(_version):
     
@@ -10,25 +11,28 @@ def initComposerDownload(_version):
     folder_path = os.path.join(parent_dir, 'composers')
     os.makedirs(folder_path, exist_ok=True)
 
-    if (_version == "see all"):
-        _version = ''
-        composer_links = versionScraper(_version)
-        for index, link in enumerate(composer_links, 1):
-            print("Composer v: " + link.rsplit('/', 2)[-2])
-        return;
-    else:
-        composer_links = versionScraper(_version)
-        # Download composer
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            for link in composer_links:
-                version = link.rsplit('/', 2)[-2]
-                composer_folder = os.path.join(
-                    folder_path, 'dev' if version == "getcomposer.org" else version)
-                os.makedirs(composer_folder, exist_ok=True)
+    if connect():
+        if (_version == "see all"):
+            _version = ''
+            composer_links = versionScraper(_version)
+            for index, link in enumerate(composer_links, 1):
+                print("Composer v: " + link.rsplit('/', 2)[-2])
+            return;
+        else:
+            composer_links = versionScraper(_version)
+            # Download composer
+            with ThreadPoolExecutor(max_workers=5) as executor:
+                for link in composer_links:
+                    version = link.rsplit('/', 2)[-2]
+                    composer_folder = os.path.join(
+                        folder_path, 'dev' if version == "getcomposer.org" else version)
+                    os.makedirs(composer_folder, exist_ok=True)
 
-                file_path = os.path.join(composer_folder, 'composer.phar')
-                executor.submit(download_file, link, file_path)
-            print(f"Composer {_version} has been downloaded!")
+                    file_path = os.path.join(composer_folder, 'composer.phar')
+                    executor.submit(download_file, link, file_path)
+                print(f"Composer {_version} has been downloaded!")
+    else:
+        print("No connection detected, please make sure you're connected to the internet.")
 
 
 def download_file(url, path):
