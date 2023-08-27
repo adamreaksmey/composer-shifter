@@ -1,6 +1,6 @@
 import os
 
-def getComposerVersions():
+def getComposerVersions(arg):
     current_directory = os.path.abspath(os.curdir)
     parent_directory = os.path.dirname(current_directory)
     composers_folder = os.path.join(parent_directory, 'composer-switcher\composers')
