@@ -1,7 +1,7 @@
 import os
 import requests
 from concurrent.futures import ThreadPoolExecutor
-from scraper.main import versionScraper
+from components.scraper.__main__ import versionScraper
 
 def initComposerDownload(_version):
     

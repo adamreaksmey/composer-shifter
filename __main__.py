@@ -1,5 +1,5 @@
 from downloader.__main__ import initComposerDownload
-from switcher.__main__ import getComposerVersions
+from switcher.__main__ import checkInstalledVersion
 import os
 
 def download_single():
@@ -14,6 +14,7 @@ def download_all():
     initComposerDownload('')
 
 def switch_version():
+    checkInstalledVersion('2.5.5')
     return;
 
 def invalid_option():
