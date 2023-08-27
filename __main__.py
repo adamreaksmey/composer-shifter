@@ -1,6 +1,35 @@
 from downloader.main import initComposerDownload
+import os
+
+def download_single():
+    see_all = input("Would you like to see all available composer versions? (Y/N) ")
+    if see_all.upper() == "Y":
+        initComposerDownload('see all')
+    version_number = input(
+        "Please input a version to download (Example: 2.5.5, 2.5.6...etc): ")
+    initComposerDownload(version_number)
+
+
+def download_all():
+    initComposerDownload('')
+
+
+def switch_version():
+    print("Functionality for switch version isn't implemented yet.")
+
+
+def invalid_option():
+    print("Invalid option chosen. Please enter a valid number.")
+
+
+options = {
+    "1": download_single,
+    "2": download_all,
+    "3": switch_version
+}
 
 if __name__ == "__main__":
+    os.system('cls' if os.name == 'nt' else 'clear')
     question = """
 What would you like to do?:
 Please input a number:
@@ -10,12 +39,4 @@ Please input a number:
 """
     print(question)
     selection = input("Please choose a number: ")
-    if (selection == "1"):
-        seeAll = input("Would you like to see all composer versions? (Y/N)")
-        if (seeAll == "Y"):
-            initComposerDownload('see all')
-        else:
-            versionNumb = input("Please input a version to download: ")
-            initComposerDownload(versionNumb)
-    else:
-        print("test dev")
+    options.get(selection, invalid_option)()

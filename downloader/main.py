@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 from scraper.main import versionScraper
 
 def initComposerDownload(_version):
+    
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     folder_path = os.path.join(parent_dir, 'composers')
@@ -27,7 +28,7 @@ def initComposerDownload(_version):
 
                 file_path = os.path.join(composer_folder, 'composer.phar')
                 executor.submit(download_file, link, file_path)
-                print(f"Composer {version} has been downloaded!")
+            print(f"Composer {_version} has been downloaded!")
 
 
 def download_file(url, path):
