@@ -3,7 +3,7 @@ import os
 def getComposerVersions():
     current_directory = os.path.abspath(os.curdir)
     parent_directory = os.path.dirname(current_directory)
-    composers_folder = os.path.join(parent_directory, 'composers')
+    composers_folder = os.path.join(parent_directory, 'composer-switcher\composers')
 
     if not os.path.exists(composers_folder):
         print("You don't have any composer versions installed!")
@@ -19,3 +19,5 @@ def checkInstalledVersion(version):
     _allV = getComposerVersions()
     if version in _allV:
         print('test dev')
+    else:
+        print(f'Composer v: {version} not found!')

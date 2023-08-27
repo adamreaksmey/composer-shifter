@@ -1,6 +1,5 @@
 from downloader.__main__ import initComposerDownload
 from switcher.__main__ import checkInstalledVersion
-import os
 from components.terminal_init.__main__ import terminalInitial
 
 def download_single():
@@ -15,7 +14,7 @@ def download_all():
     initComposerDownload('')
 
 def switch_version():
-    checkInstalledVersion('2.5.5')
+    checkInstalledVersion('1.5.5')
     return;
 
 def invalid_option():
@@ -26,6 +25,5 @@ terminalInitial({
     "download_all" : download_all,
     "switch_version" : switch_version,
     "invalid_option": invalid_option,
-    "os" : os
 })
 

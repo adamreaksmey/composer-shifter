@@ -1,3 +1,5 @@
+import os
+
 def terminalInitial(props):
     options = {
         "1": props["download_single"],
@@ -5,13 +7,13 @@ def terminalInitial(props):
         "3": props["switch_version"]
     }
 
-    props["os"].system('cls' if props["os"].name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
     question = """
-    What would you like to do?:
-    Please input a number:
-    1. Download a single composer version
-    2. Download all composer versions
-    3. Switch composer version
+What would you like to do?:
+Please input a number:
+1. Download a single composer version
+2. Download all composer versions
+3. Switch composer version
     """
     print(question)
     selection = input("Please choose a number: ")
